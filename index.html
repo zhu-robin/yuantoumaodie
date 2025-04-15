@@ -2,24 +2,125 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>圆头耄耋的终极冒险</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>圆头耄耋大冒险</title>
+  <style>
+    body { font-family: sans-serif; background-color: #fff8f0; margin: 0; padding: 20px; text-align: center; }
+    #dialogue { margin: 20px auto; max-width: 600px; font-size: 20px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); min-height: 100px; transition: all 0.5s ease-in-out; }
+    #choices button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #f9a825; color: white; cursor: pointer; transition: background-color 0.3s ease; }
+    #choices button:hover { background-color: #f57f17; }
+    #endingImage { max-width: 100%; margin-top: 20px; border-radius: 10px; display: none; opacity: 0; transition: opacity 1s ease-in-out; }
+    .fade-in { animation: fadeIn 1s forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .huff-effect::after {
+      content: "💨";
+      font-size: 40px;
+      display: inline-block;
+      animation: blowOut 1s ease-in-out;
+    }
+    @keyframes blowOut {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(100px); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-  <div class="game-container">
-    <h1>圆头耄耋の终极冒险</h1>
-    <div id="image-container">
-      <img id="character" src="assets/images/maodie.png" alt="圆头耄耋" />
-    </div>
-    <div id="dialogue">“我哈！超级大哈！。”</div>
-    <div class="button-container">
-      <button onclick="chooseAction('huff')">哈气</button>
-      <button onclick="chooseAction('roll')">打滚</button>
-      <button onclick="chooseAction('stare')">怒视</button>
-      <button onclick="chooseAction('flirt')">调戏</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
+  <h1>圆头耄耋的哈气之旅</h1>
+  <div id="dialogue">耄耋刚出现在略毛面前，他该如何行动？</div>
+  <div id="choices"></div>
+  <img id="endingImage" src="" alt="结局图片" />
+
+  <script>
+    const dialogueBox = document.getElementById('dialogue');
+    const choicesBox = document.getElementById('choices');
+    const endingImage = document.getElementById('endingImage');
+
+    const scenes = {
+      start: {
+        text: '耄耋刚出现在略毛面前，他该如何行动？',
+        choices: [
+          { text: '立刻哈气', next: 'firstHuff' },
+          { text: '观察形势', next: 'observe' }
+        ]
+      },
+      observe: {
+        text: '略毛正在装蒜，耄耋不屑一顾。是否继续哈气？',
+        choices: [
+          { text: '哈气', next: 'firstHuff' },
+          { text: '走开', next: 'die' }
+        ]
+      },
+      firstHuff: {
+        text: '第一口哈气喷出，空气中弥漫着猫毛。继续吗？',
+        huff: true,
+        choices: [
+          { text: '继续哈气', next: 'secondHuff' },
+          { text: '犹豫一下', next: 'die' }
+        ]
+      },
+      secondHuff: {
+        text: '第二口哈气震天动地，招财感受到召唤，缓缓苏醒。',
+        huff: true,
+        choices: [
+          { text: '继续最后一口哈气', next: 'tripleHuff' },
+          { text: '停止', next: 'die' }
+        ]
+      },
+      tripleHuff: {
+        text: '第三口哈气如天雷勾地火，招财完全复苏！',
+        huff: true,
+        choices: [
+          { text: '与招财联手对略毛', next: 'winTogether' },
+          { text: '独自挑战略毛', next: 'soloWin' }
+        ]
+      },
+      winTogether: {
+        text: '双贱合璧，略毛当场倒地。胜利！',
+        image: 'assets/images/maodie-zhaocai-unite.png'
+      },
+      soloWin: {
+        text: '耄耋三哈成功，略毛落荒而逃。',
+        image: 'assets/images/maodie-win.png'
+      },
+      die: {
+        text: '耄耋被略毛反扑，倒地不起，灰飞烟灭。',
+        image: 'assets/images/maodie-die.png'
+      }
+    };
+
+    function showScene(sceneKey) {
+      const scene = scenes[sceneKey];
+      dialogueBox.className = 'fade-in';
+      dialogueBox.innerHTML = scene.text;
+
+      if (scene.huff) {
+        dialogueBox.classList.add('huff-effect');
+      }
+
+      choicesBox.innerHTML = '';
+      endingImage.style.display = 'none';
+      endingImage.style.opacity = 0;
+
+      if (scene.choices) {
+        scene.choices.forEach(choice => {
+          const btn = document.createElement('button');
+          btn.textContent = choice.text;
+          btn.onclick = () => showScene(choice.next);
+          choicesBox.appendChild(btn);
+        });
+      } else if (scene.image) {
+        endingImage.src = scene.image;
+        endingImage.style.display = 'block';
+        setTimeout(() => {
+          endingImage.style.opacity = 1;
+        }, 100);
+      }
+    }
+
+    showScene('start');
+  </script>
 </body>
 </html>
