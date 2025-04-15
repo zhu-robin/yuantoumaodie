@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>圆头耄耋互动游戏</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>圆头耄耋的终极冒险</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="game-container">
-    <img id="maodie-img" src="assets/images/maodie.png" alt="圆头耄耋">
-    <p id="dialogue">你遇到了圆头耄耋……</p>
-    <button id="hachi-btn">对他哈一口气</button>
+    <h1>圆头耄耋の终极冒险</h1>
+    <div id="image-container">
+      <img id="character" src="assets/images/maodie.png" alt="圆头耄耋" />
+    </div>
+    <div id="dialogue">“我哈！超级大哈！。”</div>
+    <div class="button-container">
+      <button onclick="chooseAction('huff')">哈气</button>
+      <button onclick="chooseAction('roll')">打滚</button>
+      <button onclick="chooseAction('stare')">怒视</button>
+      <button onclick="chooseAction('flirt')">调戏</button>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
