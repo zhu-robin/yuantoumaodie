@@ -1,0 +1,29 @@
+body {
+  background-color: #f9f4e8;
+  font-family: 'STHeiti', sans-serif;
+  text-align: center;
+  padding: 30px;
+}
+
+.game-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+#maodie-img {
+  width: 300px;
+  transition: transform 0.3s;
+}
+
+#dialogue {
+  font-size: 18px;
+  margin-top: 20px;
+  min-height: 60px;
+}
+
+#hachi-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
